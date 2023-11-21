@@ -70,3 +70,22 @@ func TestSliceRemoveDuplication(t *testing.T) {
 		})
 	})
 }
+
+func TestSliceCompare(t *testing.T) {
+	Convey("切片比较", t, func() {
+		slice1 := []int{}
+		slice2 := []int{}
+		So(SliceCompare(slice1, slice2), ShouldBeTrue)
+		slice1 = []int{1, 2, 3, 4}
+		slice2 = []int{1, 2, 3, 4}
+		So(SliceCompare(slice1, slice2), ShouldBeTrue)
+		slice2 = []int{3, 1, 2, 4}
+		So(SliceCompare(slice1, slice2), ShouldBeTrue)
+		slice2 = []int{3, 1, 2, 2, 4}
+		So(SliceCompare(slice1, slice2), ShouldBeTrue)
+		slice2 = []int{1, 2, 3}
+		So(SliceCompare(slice1, slice2), ShouldBeFalse)
+		slice2 = []int{1, 2, 3, 5}
+		So(SliceCompare(slice1, slice2), ShouldBeFalse)
+	})
+}

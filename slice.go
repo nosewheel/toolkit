@@ -36,3 +36,29 @@ func SliceRemoveDuplication[T comparable](slice *[]T) {
 	}
 	*slice = (*slice)[:j]
 }
+
+// SliceCompare 判断两个切片是否相等, 去重后比较, 不考虑元素循序
+func SliceCompare[T comparable](slice1, slice2 []T) bool {
+	SliceRemoveDuplication(&slice1)
+	SliceRemoveDuplication(&slice2)
+	if len(slice1) != len(slice2) {
+		return false
+	}
+	set1 := make(map[T]bool, len(slice1))
+	for _, v := range slice1 {
+		set1[v] = false
+	}
+	for _, v := range slice2 {
+		if _, ok := set1[v]; ok {
+			set1[v] = true
+		} else {
+			return false
+		}
+	}
+	for _, v := range set1 {
+		if !v {
+			return false
+		}
+	}
+	return true
+}
